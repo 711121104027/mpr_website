@@ -1,39 +1,6 @@
-//src/app/products/[slug]/not-found.tsx
+// src/app/products/[slug]/not-found.tsx
 
 import Link from "next/link";
-import type { Metadata } from "next";
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      images: true,
-    },
-  });
-
-  if (!product) {
-    return {
-      title: "Product Not Found | MPR Furniture",
-    };
-  }
-
-  return {
-    title: `${product.name} | MPR Furniture`,
-    description: product.description,
-
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      images: product.images[0]
-        ? [product.images[0].imageUrl]
-        : [],
-    },
-  };
-}
 
 export default function NotFound() {
   return (
