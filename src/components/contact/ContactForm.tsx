@@ -2,7 +2,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useState } from "react";
 import Select from "@/components/ui/Select";
 import { Inter } from "next/font/google";
@@ -12,7 +12,7 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {
     opacity: 0,
     x: -40,
@@ -21,14 +21,14 @@ const containerVariants = {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.7,
-      ease: "easeOut",
-      staggerChildren: 0.08,
-    },
+  duration: 0.7,
+  ease: [0.22, 1, 0.36, 1],
+  staggerChildren: 0.08,
+},
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: {
     opacity: 0,
     y: 18,
@@ -37,9 +37,9 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.45,
-      ease: "easeOut",
-    },
+  duration: 0.45,
+  ease: [0.22, 1, 0.36, 1],
+},
   },
 };
 

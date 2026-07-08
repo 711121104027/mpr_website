@@ -1,6 +1,5 @@
 //src/app/products/[slug]/page.tsx
 
-// src/app/products/[slug]/page.tsx
 
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -12,11 +11,49 @@ import ProductInfo from "@/components/products/ProductInfo";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import ProductCTA from "@/components/products/ProductCTA";
 
+import type { Metadata } from "next";
+
 
 interface PageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const product = await prisma.product.findFirst({
+    where: {
+      slug,
+      status: "ACTIVE",
+    },
+    include: {
+      images: {
+        take: 1,
+      },
+    },
+  });
+
+  if (!product) {
+    return {
+      title: "Product Not Found | MPR Furniture",
+    };
+  }
+
+  return {
+    title: `${product.name} | MPR Furniture`,
+    description: product.description,
+
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: product.images.length
+        ? [product.images[0].imageUrl]
+        : [],
+    },
+  };
 }
 
 export default async function ProductDetailsPage({

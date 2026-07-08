@@ -21,7 +21,7 @@ interface ProductCardProps {
     }[];
   };
 
-  onEnquiry: () => void;
+  onEnquiry?: () => void;
 }
 
 export default function ProductCard({
@@ -135,7 +135,12 @@ export default function ProductCard({
   type="button"
   onClick={(e) => {
     e.preventDefault();
-    onEnquiry();
+
+    if (onEnquiry) {
+      onEnquiry();
+    } else {
+      window.location.href = `/products/${product.slug}`;
+    }
   }}
   className="
     mt-auto

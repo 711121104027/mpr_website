@@ -26,10 +26,12 @@ interface Product {
 
 interface ProductGridProps {
   products: Product[];
+  enableEnquiry?: boolean;
 }
 
 export default function ProductGrid({
   products,
+  enableEnquiry = true,
 }: ProductGridProps) {
   if (!products.length) {
   return null;
@@ -69,15 +71,21 @@ function handleClose() {
         <ProductCard
   key={product.id}
   product={product}
-  onEnquiry={() => handleEnquiry(product)}
+  onEnquiry={
+    enableEnquiry
+      ? () => handleEnquiry(product)
+      : undefined
+  }
 />
       ))}
 
-      <ProductEnquiryModal
-  open={open}
-  product={selectedProduct}
-  onClose={handleClose}
-/>
+      {enableEnquiry && (
+  <ProductEnquiryModal
+    open={open}
+    product={selectedProduct}
+    onClose={handleClose}
+  />
+)}
     </div>
   );
 }

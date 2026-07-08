@@ -126,7 +126,7 @@ export default function RelatedProducts({
 
         <ProductGrid
   products={products}
-  showEnquiry={false}
+  enableEnquiry={false}
 />
 
       </div>
