@@ -23,7 +23,6 @@ const logos = [
   "/trusted/logo5.png",
   "/trusted/logo6.png",
   "/trusted/logo7.png",
-  "/trusted/logo8.png",
 ];
 
 // Duplicate for seamless marquee
