@@ -22,12 +22,12 @@ const contactDetails = [
   {
     icon: Mail,
     title: "Email Inquiries",
-    content: "mprfurniture@gmail.com",
+    content: "mprchairservice5@gmail.com",
   },
   {
     icon: MapPin,
     title: "Our Location",
-    content: "69, Nadakappatti, Thogaimalai, Tamil Nadu-621313",
+    content: "11/245, Nadakappatti, Thogaimalai, Karur, Tamil Nadu-621313",
   },
 ];
 
@@ -59,7 +59,7 @@ export default function ContactInfo() {
                 </p>
 
                 <p
-                  className={`${poppins.className} mt-2 whitespace-pre-line text-lg font-medium leading-relaxed text-[#111111] lg:text-[18px]`}
+                  className={`${poppins.className} mt-2 whitespace-pre-line text-lg font-medium leading-relaxed text-[#111111] lg:text-[16px]`}
                 >
                   {item.content}
                 </p>

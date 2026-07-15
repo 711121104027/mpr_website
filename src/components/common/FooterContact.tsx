@@ -62,10 +62,10 @@ export default function FooterContact() {
             <p className="text-sm font-semibold text-gray-900">Email</p>
 
             <a
-              href="mailto:info@mprfurniture.com"
+              href="mailto:mprchairservice5@gmail.com"
               className="mt-1 block break-all text-[15px] leading-6 text-gray-600 transition hover:text-[#C41E1E]"
             >
-              info@mprfurniture.com
+              mprchairservice5@gmail.com
             </a>
           </div>
         </div>
@@ -84,9 +84,9 @@ export default function FooterContact() {
             <p className="text-sm font-semibold text-gray-900">Address</p>
 
             <p className="mt-1 text-[15px] leading-7 text-gray-600">
-              69, Nadakappatti, Thogaimalai,
+              11/245, Nadakappatti, Thogaimalai,
               <br />
-              Tamil Nadu - 621313
+              Karur, Tamil Nadu - 621313
             </p>
           </div>
         </div>
