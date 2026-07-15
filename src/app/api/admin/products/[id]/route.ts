@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { ProductSchema } from "@/lib/validators";
+import { revalidatePath } from "next/cache";
 
 interface RouteContext {
   params: Promise<{
@@ -42,7 +43,11 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(product);
+    revalidatePath("/");
+revalidatePath("/products");
+revalidatePath(`/products/${product?.slug}`);
+
+return NextResponse.json(product);
   } catch (error) {
     console.error(error);
 
@@ -249,14 +254,17 @@ export async function DELETE(
     }
 
     await prisma.product.delete({
-      where: {
-        id,
-      },
-    });
+  where: {
+    id,
+  },
+});
 
-    return NextResponse.json({
-      message: "Product deleted successfully.",
-    });
+revalidatePath("/");
+revalidatePath("/products");
+
+return NextResponse.json({
+  message: "Product deleted successfully.",
+});
   } catch (error) {
     console.error(error);
 

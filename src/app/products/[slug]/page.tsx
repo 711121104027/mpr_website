@@ -13,6 +13,8 @@ import ProductCTA from "@/components/products/ProductCTA";
 
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 
 interface PageProps {
   params: Promise<{

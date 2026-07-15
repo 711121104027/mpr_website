@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { ProductSchema } from "@/lib/validators";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
@@ -122,9 +123,13 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    return NextResponse.json(product, {
-      status: 201,
-    });
+    revalidatePath("/");
+revalidatePath("/products");
+revalidatePath(`/products/${product?.slug}`);
+
+return NextResponse.json(product, {
+  status: 201,
+});
   } catch (error: any) {
     console.error(error);
 

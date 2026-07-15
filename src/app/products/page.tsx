@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import ProductListing from "@/components/products/ProductListing";
 import { Metadata } from "next";
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Furniture | MPR Furniture",
