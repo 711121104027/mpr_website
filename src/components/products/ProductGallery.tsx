@@ -60,7 +60,7 @@ export default function ProductGallery({
               fill
               priority
               unoptimized
-              className="object-cover"
+              className="object-contain p-4"
             />
           </motion.div>
 
@@ -103,7 +103,7 @@ export default function ProductGallery({
                 alt={`${product.name} ${index + 1}`}
                 fill
                 unoptimized
-                className="object-cover"
+                className="object-contain p-2"
               />
             </button>
           ))}

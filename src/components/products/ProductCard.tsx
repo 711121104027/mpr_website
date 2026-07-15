@@ -73,25 +73,20 @@ export default function ProductCard({
 
                     {/* Product Image */}
 
-                    <div className="relative h-[230px] w-full overflow-hidden bg-white">
-
-                        <Image
-                            src={
-                                product.images[0]?.imageUrl ??
-                                "/placeholder.png"
-                            }
-                            alt={product.name}
-                            fill
-                            unoptimized
-                            className="
-                object-cover
-                transition-transform
-                duration-500
-                hover:scale-105
-              "
-                        />
-
-                    </div>
+                    <div className="relative aspect-[4/3] bg-white p-3">
+  <Image
+    src={product.images[0]?.imageUrl ?? "/placeholder.png"}
+    alt={product.name}
+    fill
+    unoptimized
+    className="
+      object-contain
+      transition-transform
+      duration-500
+      hover:scale-105
+    "
+  />
+</div>
 
                 </div>
 
