@@ -29,17 +29,17 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white shadow-sm">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
+      <div className="mx-auto flex h-24 lg:h-28 max-w-7xl items-center justify-between px-5 lg:px-8">
         {/* Logo */}
         <Link href="/" className="shrink-0">
           <Image
-            src="/logo.png"
-            alt="MPR Furniture"
-            width={100}
-            height={50}
-            priority
-            className="h-auto w-[95px] lg:w-[100px]"
-          />
+  src="/logo.png"
+  alt="MPR Furniture"
+  width={180}
+  height={100}
+  priority
+  className="h-auto w-[100px] sm:w-[105px] lg:w-[120px] xl:w-[140px]"
+/>
         </Link>
 
         {/* Desktop Navigation */}
@@ -126,11 +126,12 @@ export default function Header() {
               {/* Top */}
               <div className="flex items-center justify-between border-b px-6 py-5">
                 <Image
-                  src="/logo.png"
-                  alt="MPR Furniture"
-                  width={100}
-                  height={55}
-                />
+  src="/logo.png"
+  alt="MPR Furniture"
+  width={150}
+  height={90}
+  className="w-[120px]"
+/>
 
                 <button onClick={() => setOpen(false)}>
                   <X size={30} />
