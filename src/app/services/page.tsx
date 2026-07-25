@@ -6,6 +6,7 @@ import ServiceHero from "@/components/services/ServiceHero";
 import ServicesList from "@/components/services/ServicesList";
 import Workflow from "@/components/services/Workflow";
 import ServiceCTA from "@/components/services/ServiceCTA";
+import SparePartsSection from "@/components/services/SparePartsSection";
 
 export const metadata: Metadata = {
   title: "Services | MPR Furniture",
@@ -19,6 +20,8 @@ export default function ServicesPage() {
       <ServiceHero />
 
       <ServicesList />
+
+      <SparePartsSection />
 
       <Workflow />
 
