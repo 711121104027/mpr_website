@@ -20,7 +20,7 @@ export default function FooterAbout() {
     <div className="flex flex-col">
       {/* Logo */}
       <Image
-  src="/logo.png"
+  src="/logo.jpeg"
   alt="MPR Furniture"
   width={180}
   height={110}

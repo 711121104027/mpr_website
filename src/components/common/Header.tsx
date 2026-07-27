@@ -33,7 +33,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="shrink-0">
           <Image
-  src="/logo.png"
+  src="/logo.jpeg"
   alt="MPR Furniture"
   width={180}
   height={100}
