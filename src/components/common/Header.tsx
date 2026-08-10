@@ -126,7 +126,7 @@ export default function Header() {
               {/* Top */}
               <div className="flex items-center justify-between border-b px-6 py-5">
                 <Image
-  src="/logo.png"
+  src="/logo.jpeg"
   alt="MPR Furniture"
   width={150}
   height={90}

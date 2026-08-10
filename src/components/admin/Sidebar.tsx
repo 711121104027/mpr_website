@@ -37,7 +37,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="flex h-20 items-center justify-center border-b border-gray-200">
         <Image
-          src="/logo.png"
+          src="/logo.jpeg"
           alt="MPR Furniture"
           width={110}
           height={55}
