@@ -5,38 +5,64 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { cache } from "react";
+import type { Metadata } from "next";
 
 import ProductGallery from "@/components/products/ProductGallery";
 import ProductInfo from "@/components/products/ProductInfo";
 import RelatedProducts from "@/components/products/RelatedProducts";
 import ProductCTA from "@/components/products/ProductCTA";
 
-import type { Metadata } from "next";
-
-export const dynamic = "force-dynamic";
-
-
 interface PageProps {
   params: Promise<{
     slug: string;
   }>;
 }
+
+/*
+|--------------------------------------------------------------------------
+| Get Product
+|--------------------------------------------------------------------------
+| cache() prevents duplicate product queries during the same request.
+*/
+
+const getProduct = cache(async (slug: string) => {
+  return prisma.product.findFirst({
+    where: {
+      slug,
+      status: "ACTIVE",
+    },
+
+    include: {
+      category: true,
+
+      images: {
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+
+      features: {
+        orderBy: {
+          id: "asc",
+        },
+      },
+    },
+  });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Metadata
+|--------------------------------------------------------------------------
+*/
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const product = await prisma.product.findFirst({
-    where: {
-      slug,
-      status: "ACTIVE",
-    },
-    include: {
-      images: {
-        take: 1,
-      },
-    },
-  });
+  const product = await getProduct(slug);
 
   if (!product) {
     return {
@@ -46,118 +72,141 @@ export async function generateMetadata({
 
   return {
     title: `${product.name} | MPR Furniture`,
+
     description: product.description,
 
     openGraph: {
       title: product.name,
+
       description: product.description,
-      images: product.images.length
-        ? [product.images[0].imageUrl]
+
+      images: product.images[0]
+        ? [
+            {
+              url: product.images[0].imageUrl,
+            },
+          ]
         : [],
     },
   };
 }
+
+/*
+|--------------------------------------------------------------------------
+| Product Details Page
+|--------------------------------------------------------------------------
+*/
 
 export default async function ProductDetailsPage({
   params,
 }: PageProps) {
   const { slug } = await params;
 
-  const product = await prisma.product.findFirst({
-  where: {
-    slug,
-    status: "ACTIVE",
-  },
+  /*
+  |--------------------------------------------------------------------------
+  | Main Product
+  |--------------------------------------------------------------------------
+  */
 
-  include: {
-    category: true,
+  const product = await getProduct(slug);
 
-    images: {
-      orderBy: {
-        createdAt: "asc",
-      },
-    },
+  if (!product) {
+    notFound();
+  }
 
-    features: {
-      orderBy: {
-        id: "asc",
-      },
-    },
-  },
-});
-
-  if (!product || product.status !== "ACTIVE") {
-  notFound();
-}
+  /*
+  |--------------------------------------------------------------------------
+  | Related Products
+  |--------------------------------------------------------------------------
+  */
 
   const relatedProducts = await prisma.product.findMany({
-  where: {
-    status: "ACTIVE",
+    where: {
+      status: "ACTIVE",
 
-    categoryId: product.categoryId,
+      categoryId: product.categoryId,
 
-    NOT: {
-      id: product.id,
-    },
-  },
-
-  include: {
-    category: true,
-
-    images: {
-      take: 1,
-      orderBy: {
-        createdAt: "asc",
+      NOT: {
+        id: product.id,
       },
     },
-  },
 
-  take: 4,
-});
+    include: {
+      category: true,
+
+      images: {
+        take: 1,
+
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+
+    take: 4,
+  });
 
   return (
     <main className="bg-white">
 
+      {/* Product Section */}
+
       <section className="mx-auto max-w-7xl px-5 py-10 lg:px-4">
+
         {/* Mobile Back Button */}
 
-<div className="mb-6 lg:hidden">
-  <Link
-    href="/products"
-    className="
-      inline-flex
-      items-center
-      gap-2
-      font-[Inter]
-      text-[15px]
-      text-gray-700
-      transition
-      hover:text-[#B5161B]
-    "
-  >
-    <ArrowLeft size={18} />
-    Back to Product
-  </Link>
-</div>
+        <div className="mb-6 lg:hidden">
+          <Link
+            href="/products"
+            className="
+              inline-flex
+              items-center
+              gap-2
+              font-[Inter]
+              text-[15px]
+              text-gray-700
+              transition
+              hover:text-[#B5161B]
+            "
+          >
+            <ArrowLeft size={18} />
+
+            Back to Product
+          </Link>
+        </div>
+
+        {/* Product Layout */}
 
         <div className="grid gap-12 lg:grid-cols-2">
-            
-            
+
+          {/* Gallery */}
+
           <ProductGallery
             product={product}
           />
 
+          {/* Information */}
+
           <ProductInfo
             product={product}
           />
+
         </div>
 
       </section>
+
+      {/* Related Products */}
 
       <RelatedProducts
         products={relatedProducts}
         currentCategory={product.category.name}
       />
+
+      {/* CTA */}
 
       <ProductCTA />
 

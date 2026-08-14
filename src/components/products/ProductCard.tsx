@@ -41,7 +41,10 @@ export default function ProductCard({
         hover:shadow-lg
       "
         >
-            <Link href={`/products/${product.slug}`}>
+            <Link
+  href={`/products/${product.slug}`}
+  prefetch={true}
+>
 
                 {/* Image Section */}
 
