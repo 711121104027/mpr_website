@@ -2,8 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import ProductListing from "@/components/products/ProductListing";
-import { Metadata } from "next";
-export const dynamic = "force-dynamic";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Furniture | MPR Furniture",
@@ -11,27 +10,53 @@ export const metadata: Metadata = {
     "Explore our premium office furniture collection.",
 };
 
+// Revalidate the product listing periodically.
+// Admin changes can explicitly invalidate this page.
+export const revalidate = 60;
+
 export default async function ProductsPage() {
   const [products, categories] = await Promise.all([
     prisma.product.findMany({
       where: {
         status: "ACTIVE",
       },
-      include: {
-        category: true,
+
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        code: true,
+
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+
         images: {
+          select: {
+            id: true,
+            imageUrl: true,
+          },
           orderBy: {
             createdAt: "asc",
           },
+          take: 1,
         },
-        features: true,
       },
+
       orderBy: {
         createdAt: "desc",
       },
     }),
 
     prisma.category.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+
       orderBy: {
         name: "asc",
       },
@@ -39,7 +64,7 @@ export default async function ProductsPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="bg-white">
       <ProductListing
         products={products}
         categories={categories}

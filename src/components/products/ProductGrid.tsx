@@ -33,59 +33,61 @@ export default function ProductGrid({
   products,
   enableEnquiry = true,
 }: ProductGridProps) {
-  if (!products.length) {
-  return null;
-}
-
+  // Hooks MUST come before any conditional return
   const router = useRouter();
 
-const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-const [selectedProduct, setSelectedProduct] =
-  useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] =
+    useState<Product | null>(null);
+
+  // If there are no products, show nothing
+  if (!products.length) {
+    return null;
+  }
 
   function handleEnquiry(product: Product) {
-  setSelectedProduct(product);
-  setOpen(true);
-}
-
-function handleClose() {
-  setOpen(false);
-
-  if (selectedProduct) {
-    router.push(`/products/${selectedProduct.slug}`);
+    setSelectedProduct(product);
+    setOpen(true);
   }
-}
+
+  function handleClose() {
+    setOpen(false);
+
+    if (selectedProduct) {
+      router.push(`/products/${selectedProduct.slug}`);
+    }
+  }
 
   return (
     <div
-  className="
-    grid
-    grid-cols-2
-    gap-4
-    lg:grid-cols-3
-    xl:grid-cols-4
-  "
->
+      className="
+        grid
+        grid-cols-2
+        gap-4
+        lg:grid-cols-3
+        xl:grid-cols-4
+      "
+    >
       {products.map((product) => (
         <ProductCard
-  key={product.id}
-  product={product}
-  onEnquiry={
-    enableEnquiry
-      ? () => handleEnquiry(product)
-      : undefined
-  }
-/>
+          key={product.id}
+          product={product}
+          onEnquiry={
+            enableEnquiry
+              ? () => handleEnquiry(product)
+              : undefined
+          }
+        />
       ))}
 
       {enableEnquiry && (
-  <ProductEnquiryModal
-    open={open}
-    product={selectedProduct}
-    onClose={handleClose}
-  />
-)}
+        <ProductEnquiryModal
+          open={open}
+          product={selectedProduct}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 }

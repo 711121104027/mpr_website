@@ -14,12 +14,6 @@ interface Category {
 interface ProductImage {
   id: string;
   imageUrl: string;
-  publicId: string;
-}
-
-interface ProductFeature {
-  id: string;
-  feature: string;
 }
 
 interface Product {
@@ -27,13 +21,10 @@ interface Product {
   name: string;
   slug: string;
   code: string;
-  description: string;
 
   category: Category;
 
   images: ProductImage[];
-
-  features: ProductFeature[];
 }
 
 interface ProductListingProps {
