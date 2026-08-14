@@ -1,4 +1,4 @@
-//src/components/products/ProductGallery.tsx
+// src/components/products/ProductGallery.tsx
 
 "use client";
 
@@ -12,6 +12,7 @@ interface ProductGalleryProps {
       id: string;
       imageUrl: string;
     }[];
+
     name: string;
   };
 }
@@ -24,16 +25,28 @@ export default function ProductGallery({
   const images = product.images;
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-0 max-w-full">
 
-      {/* Main Image */}
+      {/* =====================================================
+          MAIN PRODUCT IMAGE
+      ====================================================== */}
 
-      <div className="relative overflow-hidden rounded-lg border border-gray-200 bg-white">
-
+      <div
+        className="
+          relative
+          w-full
+          min-w-0
+          max-w-full
+          overflow-hidden
+          rounded-lg
+          border
+          border-gray-200
+          bg-white
+        "
+      >
         <AnimatePresence mode="wait">
-
           <motion.div
-            key={images[selectedImage]?.id}
+            key={images[selectedImage]?.id ?? "placeholder"}
             initial={{
               opacity: 0,
             }}
@@ -43,13 +56,18 @@ export default function ProductGallery({
             exit={{
               opacity: 0,
             }}
-            whileHover={{
-  scale: 1.02,
-}}
             transition={{
-              duration: 0.3,
+              duration: 0.25,
             }}
-            className="relative aspect-[4/3] w-full"
+            className="
+              relative
+              h-[240px]
+              w-full
+              min-w-0
+              sm:h-[300px]
+              lg:aspect-[4/3]
+              lg:h-auto
+            "
           >
             <Image
               src={
@@ -58,58 +76,98 @@ export default function ProductGallery({
               }
               alt={product.name}
               fill
-              priority
+              priority={selectedImage === 0}
               unoptimized
-              className="object-contain p-4"
+              sizes="
+                (max-width: 640px) 100vw,
+                (max-width: 1024px) 50vw,
+                50vw
+              "
+              className="
+                object-contain
+                p-3
+                sm:p-4
+              "
             />
           </motion.div>
-
         </AnimatePresence>
-
       </div>
 
-      {/* Thumbnails */}
+      {/* =====================================================
+          THUMBNAILS
+      ====================================================== */}
 
       {images.length > 1 && (
-        <div className="mt-4 flex gap-4 overflow-x-auto pb-2">
+        <div
+          className="
+            mt-4
+            w-full
+            min-w-0
+            max-w-full
+            overflow-x-auto
+            overflow-y-hidden
+            overscroll-x-contain
+            pb-2
+            scrollbar-thin
+          "
+        >
+          <div
+            className="
+              flex
+              w-max
+              min-w-full
+              gap-3
+              sm:gap-4
+            "
+          >
+            {images.map((image, index) => (
+              <button
+                key={image.id}
+                type="button"
+                onClick={() => setSelectedImage(index)}
+                aria-label={`View image ${index + 1}`}
+                className={`
+                  relative
+                  h-[72px]
+                  w-[72px]
+                  flex-shrink-0
+                  overflow-hidden
+                  rounded-md
+                  border-2
+                  bg-white
+                  transition-all
+                  duration-200
 
-          {images.map((image, index) => (
-            <button
-              key={image.id}
-              type="button"
-              onClick={() =>
-                setSelectedImage(index)
-              }
-              className={`
-                relative
-                h-24
-                w-28
-                flex-shrink-0
-                overflow-hidden
-                rounded-md
-                border-2
-                transition-all
-                duration-300
+                  sm:h-20
+                  sm:w-24
 
-                ${
-                  selectedImage === index
-                    ? "border-[#B5161B]"
-                    : "border-gray-200 hover:border-gray-400"
-                }
-              `}
-            >
-              <Image
-                src={image.imageUrl}
-                alt={`${product.name} ${index + 1}`}
-                fill
-                unoptimized
-                className="object-contain p-2"
-              />
-            </button>
-          ))}
+                  lg:h-24
+                  lg:w-28
 
+                  ${
+                    selectedImage === index
+                      ? "border-[#B5161B]"
+                      : "border-gray-200 hover:border-gray-400"
+                  }
+                `}
+              >
+                <Image
+                  src={image.imageUrl}
+                  alt={`${product.name} ${index + 1}`}
+                  fill
+                  unoptimized
+                  sizes="112px"
+                  className="
+                    object-contain
+                    p-2
+                  "
+                />
+              </button>
+            ))}
+          </div>
         </div>
       )}
+
     </div>
   );
 }
