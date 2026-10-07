@@ -52,10 +52,6 @@ const spareParts = [
     image: "/services/spare-parts/t-sonyc-handle.jpeg",
   },
   {
-    name: "S Type PU Handle",
-    image: "/services/spare-parts/s-type-pu-handle.jpeg",
-  },
-  {
     name: "Tilting Mechanism",
     image: "/services/spare-parts/tilting-mechanism.jpeg",
   },
@@ -64,8 +60,8 @@ const spareParts = [
     image: "/services/spare-parts/synchro-mechanism.jpeg",
   },
   {
-    name: "Peacock Handle",
-    image: "/services/spare-parts/peacock-handle.jpeg",
+    name: "Malaysiyan PU Handle",
+    image: "/services/spare-parts/Malaysiyan_PU_handle.png",
   },
 ];
 
