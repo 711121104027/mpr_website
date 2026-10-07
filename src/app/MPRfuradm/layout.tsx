@@ -23,6 +23,7 @@ export default function AdminLayout({
     "/MPRfuradm/dashboard": "Dashboard",
     "/MPRfuradm/products": "Products",
     "/MPRfuradm/categories": "Categories",
+    "/MPRfuradm/spare-parts": "Spare Parts",
   };
 
   const title =

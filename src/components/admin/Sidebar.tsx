@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   Package,
   Shapes,
+  Wrench,
 } from "lucide-react";
 
 const menuItems = [
@@ -26,6 +27,11 @@ const menuItems = [
     title: "Categories",
     href: "/MPRfuradm/categories",
     icon: Shapes,
+  },
+  {
+    title: "Spare Parts",
+    href: "/MPRfuradm/spare-parts",
+    icon: Wrench,
   },
 ];
 
